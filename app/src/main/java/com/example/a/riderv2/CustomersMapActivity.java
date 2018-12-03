@@ -285,7 +285,7 @@ public class CustomersMapActivity extends FragmentActivity implements OnMapReady
                         requestRideButton.setText("Driver is here.");
                     }
                     else{
-                        requestRideButton.setText("Driver found "+String.valueOf(distance)+ " away from you");
+                        requestRideButton.setText("Driver found "+String.valueOf(distance)+ " away from you (Click here to cancel)");
                     }
 
                     driverMarker = mMap.addMarker(new MarkerOptions().position(driverLATLNG).title("Your Driver is here"));
