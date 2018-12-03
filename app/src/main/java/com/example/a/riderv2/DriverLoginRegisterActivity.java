@@ -117,7 +117,7 @@ public class DriverLoginRegisterActivity extends AppCompatActivity {
                         loadingBar.dismiss();
                     }
                     else if(checkMail == false){
-                        Toast.makeText(DriverLoginRegisterActivity.this, "Register Failed. Enter a correct Email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DriverLoginRegisterActivity.this, "Sign In Failed. Enter a correct Email", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
                     }
                     else{
@@ -173,6 +173,8 @@ public class DriverLoginRegisterActivity extends AppCompatActivity {
             });
         }
     }
+
+
     /**
      * method is used for checking valid email id format.
      *

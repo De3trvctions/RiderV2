@@ -116,7 +116,7 @@ public class CustomerLoginRegisterActivity extends AppCompatActivity {
                         loadingBar.dismiss();
                     }
                     else if(checkMail == false){
-                        Toast.makeText(CustomerLoginRegisterActivity.this, "Register Failed. Enter a correct Email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CustomerLoginRegisterActivity.this, "Sign Failed. Enter a correct Email", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
                     }
                     else{

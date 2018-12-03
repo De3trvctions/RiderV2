@@ -1,5 +1,7 @@
 package com.example.a.riderv2;
 
+import android.*;
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -69,7 +71,7 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
     private DatabaseReference assignedCustomerRef;
     private DatabaseReference assignedCustomerPickUpRef;
     private DatabaseReference DriverLocationRef;
-
+    SupportMapFragment mapFragment;
     private String driverID;
     private String customerID = "";
     private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -80,6 +82,7 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drivers_map);
 
+
         polylines = new ArrayList<>();
 
         mAuth = FirebaseAuth.getInstance();
@@ -89,9 +92,16 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
         driverLogoutButton = (Button)findViewById(R.id.driver_logout_btn);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(DriversMapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+        }
+        else{
+            mapFragment.getMapAsync(this);
+        }
 
         // when login button is click, logout the driver and remove it from the firebase availablity
         driverLogoutButton.setOnClickListener(new View.OnClickListener() {
@@ -273,10 +283,10 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+//changed!!!
         buildGoogleAPIClient();
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+            ActivityCompat.requestPermissions(DriversMapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
         }
         mMap.setMyLocationEnabled(true);
     }
@@ -289,7 +299,7 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
         locationRequest.setPriority(locationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+            ActivityCompat.requestPermissions(DriversMapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
     }
@@ -349,6 +359,24 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
                 .addApi(LocationServices.API)
                 .build();
         googleApiClient.connect();
+    }
+
+
+    final int LOCATION_REQUEST_CODE = 1;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch(requestCode){
+            case LOCATION_REQUEST_CODE:{
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    mapFragment.getMapAsync(this);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Please provide the permission", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
     }
 
     @Override
