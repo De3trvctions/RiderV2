@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_customer_login_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/loginreg"
+    tools:context="com.example.a.riderv2.CustomerLoginRegisterActivity">
+
+    <TextView
+        android:text="Customer Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="180dp"
+        android:id="@+id/customer_status"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textColor="?attr/actionMenuTextColor" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:layout_below="@+id/customer_status"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:id="@+id/customer_email"
+        android:hint="Email Address" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/customer_password"
+        android:hint="Password"
+        android:layout_below="@+id/customer_email"
+        android:layout_alignParentStart="true"
+        android:selectAllOnFocus="false"
+        android:fontFamily="sans-serif"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:text="Login"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:id="@+id/customer_login_btn"
+        android:backgroundTint="@color/common_google_signin_btn_text_dark_pressed"
+        android:textSize="17sp"
+        android:layout_below="@+id/customer_password"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Don't have an account?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/customer_register_link"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:layout_below="@+id/customer_login_btn"
+        android:layout_alignStart="@+id/customer_login_btn"
+        android:layout_alignLeft="@+id/customer_login_btn" />
+
+    <Button
+        android:text="Register"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:textSize="17sp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:id="@+id/customer_register_btn"
+        android:layout_below="@+id/customer_register_link"
+        android:layout_alignStart="@+id/customer_register_link"
+        android:layout_alignLeft="@+id/customer_register_link" />
+</RelativeLayout>
