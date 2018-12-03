@@ -55,7 +55,9 @@ public class CustomersMapActivity extends FragmentActivity implements OnMapReady
         RoutingListener {
 
     private GoogleMap mMap;
+
     GoogleApiClient googleApiClient;
+
     Location lastLocation;
     LocationRequest locationRequest;
 
@@ -301,7 +303,7 @@ public class CustomersMapActivity extends FragmentActivity implements OnMapReady
     }
     private void getRouteToMarker(LatLng pickUpLATLNG) {
         Routing routing = new Routing.Builder()
-                .key("AIzaSyBUOgq1qbyr4eY7r04z9VJUtvM20OfNa1c")
+                .key("AIzaSyCRwkBa-iFXNFiafO2FH75yHkh0E4Go950")
                 .travelMode(AbstractRouting.TravelMode.DRIVING)
                 .withListener(this)
                 .alternativeRoutes(false)
@@ -422,12 +424,8 @@ public class CustomersMapActivity extends FragmentActivity implements OnMapReady
             Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
         }
     }
-
     @Override
-    public void onRoutingStart() {
-
-    }
-
+    public void onRoutingStart() {}
     @Override
     public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
         if(polylines.size()>0) {
@@ -435,7 +433,6 @@ public class CustomersMapActivity extends FragmentActivity implements OnMapReady
                 poly.remove();
             }
         }
-
         polylines = new ArrayList<>();
         //add route(s) to the map.
         for (int i = 0; i <route.size(); i++) {
@@ -450,16 +447,13 @@ public class CustomersMapActivity extends FragmentActivity implements OnMapReady
             Polyline polyline = mMap.addPolyline(polyOptions);
             polylines.add(polyline);
 
-            Toast.makeText(getApplicationContext(),"Route "+ (i+1) +": distance - "+ route.get(i).getDistanceValue()+": duration - "+ route.get(i).getDurationValue(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Route "+ (i+1) +": distance - "+ route.get(i).getDistanceValue()
+                    +": duration - "+ route.get(i).getDurationValue(),Toast.LENGTH_SHORT).show();
         }
-
     }
-
     @Override
     public void onRoutingCancelled() {
-
     }
-
     private void erasePolyLines(){
         for(Polyline line : polylines){
             line.remove();

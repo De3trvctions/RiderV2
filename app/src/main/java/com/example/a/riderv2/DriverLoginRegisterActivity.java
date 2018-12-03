@@ -26,16 +26,21 @@ public class DriverLoginRegisterActivity extends AppCompatActivity {
 
     private Button DriverLoginButton;
     private Button DriverRegisterButton;
+
     private TextView DriverRegisterLink;
     private TextView DriverStatus;
+
     private EditText DriverEmail;
     private EditText DriverPassword;
+
     private ProgressDialog loadingBar;
+
     private boolean checkMail;
 
     private FirebaseAuth mAuth;
 
     private DatabaseReference driverDatabaseRef;
+
     private String driverID;
 
     @Override

@@ -54,14 +54,22 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
         RoutingListener{
 
     private GoogleMap mMap;
+
+    Marker pickUpMarker;
+    Marker driverMarker;
+
+    private ValueEventListener assignedCustomerPickUpRefListener;
+    private ValueEventListener DriverLocationRefListener;
+
     GoogleApiClient googleApiClient;
+
     Location lastLocation;
+
     LocationRequest locationRequest;
 
     private LatLng DriverLocation;
 
     private Button driverLogoutButton;
-
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -71,11 +79,12 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
     private DatabaseReference assignedCustomerRef;
     private DatabaseReference assignedCustomerPickUpRef;
     private DatabaseReference DriverLocationRef;
+
     SupportMapFragment mapFragment;
+
     private String driverID;
     private String customerID = "";
     private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,10 +161,6 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
         });
 
     }
-    Marker pickUpMarker;
-    Marker driverMarker;
-    private ValueEventListener assignedCustomerPickUpRefListener;
-    private ValueEventListener DriverLocationRefListener;
 
     private void getAssignedCustomerPickUpLocation() {
         assignedCustomerPickUpRef = FirebaseDatabase.getInstance().getReference()
@@ -180,7 +185,6 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
                     //getRouteToMarker(customerLATLNG);
 
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
                     /*
                     DriverLocationRef = FirebaseDatabase.getInstance().getReference()
@@ -208,11 +212,7 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
 
                         }
                     });
-
-
-
 */
-
 
                 }
 
@@ -223,40 +223,6 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
             }
         });
 
-
-        /*
-        assignedCustomerPickUpRef = FirebaseDatabase.getInstance().getReference()
-                .child("Customer Requests").child(customerID).child("l");
-        assignedCustomerPickUpRefListener = assignedCustomerPickUpRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists() && customerID.equals("")){
-                    List<Object> customerLocationMap = (List<Object>)dataSnapshot.getValue();
-                    double locationLat = 0;
-                    double locationLng = 0;
-                    if(customerLocationMap.get(0)!= null){
-                        locationLat = Double.parseDouble(customerLocationMap.get(0).toString());
-                    }
-                    if(customerLocationMap.get(0)!= null){
-                        locationLng = Double.parseDouble(customerLocationMap.get(1).toString());
-                    }
-
-                    LatLng customerPickUpLocation = new LatLng(locationLat,locationLng);
-
-                    LatLng pickUpLATLNG = new LatLng(locationLat,locationLng);
-                    pickUpMarker = mMap.addMarker(new MarkerOptions().position(customerPickUpLocation).title("Pick Up customer Location"));
-                    getRouteToMarker(pickUpLATLNG);
-                }
-                else{
-                    erasePolyLines();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        }); */
     }
 
 
@@ -283,7 +249,7 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-//changed!!!
+        //changed!!!
         buildGoogleAPIClient();
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(DriversMapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
@@ -330,12 +296,6 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
 
             DatabaseReference driverWorkingRef = FirebaseDatabase.getInstance().getReference().child("Drivers Working");
             GeoFire geoFireWorking = new GeoFire(driverWorkingRef);
-
-            //String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            //DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers");
-            //GeoFire geofire = new GeoFire(ref);
-            //geofire.setLocation(userId, new GeoLocation(lastLocation.getLatitude(),lastLocation.getLongitude()));
-
 
             //a switch case where if no customerID, the driver will be free and no customer request
             switch (customerID){

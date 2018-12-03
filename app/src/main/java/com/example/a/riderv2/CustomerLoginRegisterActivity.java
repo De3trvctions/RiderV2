@@ -26,16 +26,21 @@ public class CustomerLoginRegisterActivity extends AppCompatActivity {
 
     private Button CustomerLoginButton;
     private Button CustomerRegisterButton;
+
     private TextView CustomerRegisterLink;
     private TextView CustomerStatus;
+
     private EditText CustomerEmail;
     private EditText CustomerPassword;
+
     private ProgressDialog loadingBar;
+
     private boolean checkMail;
 
     private FirebaseAuth mAuth;
 
     private DatabaseReference customerDatabaseRef;
+
     private String customerID;
 
 
